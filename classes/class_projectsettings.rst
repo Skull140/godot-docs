@@ -32,6 +32,8 @@ When naming a Project Settings property, use the full path to the setting includ
 Tutorials
 ---------
 
+- :doc:`Project Settings <../tutorials/editor/project_settings>`
+
 - `3D Physics Tests Demo <https://godotengine.org/asset-library/asset/2747>`__
 
 - `3D Platformer Demo <https://godotengine.org/asset-library/asset/2748>`__
@@ -403,6 +405,10 @@ Properties
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                           | :ref:`display/window/energy_saving/keep_screen_on<class_ProjectSettings_property_display/window/energy_saving/keep_screen_on>`                                                                             | ``true``                                                                                         |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                           | :ref:`display/window/frame_pacing/android/enable_frame_pacing<class_ProjectSettings_property_display/window/frame_pacing/android/enable_frame_pacing>`                                                     | ``true``                                                                                         |
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                             | :ref:`display/window/frame_pacing/android/swappy_mode<class_ProjectSettings_property_display/window/frame_pacing/android/swappy_mode>`                                                                     | ``2``                                                                                            |
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                             | :ref:`display/window/handheld/orientation<class_ProjectSettings_property_display/window/handheld/orientation>`                                                                                             | ``0``                                                                                            |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                           | :ref:`display/window/ios/allow_high_refresh_rate<class_ProjectSettings_property_display/window/ios/allow_high_refresh_rate>`                                                                               | ``true``                                                                                         |
@@ -432,6 +438,8 @@ Properties
    | :ref:`bool<class_bool>`                           | :ref:`display/window/size/no_focus<class_ProjectSettings_property_display/window/size/no_focus>`                                                                                                           | ``false``                                                                                        |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                           | :ref:`display/window/size/resizable<class_ProjectSettings_property_display/window/size/resizable>`                                                                                                         | ``true``                                                                                         |
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                           | :ref:`display/window/size/sharp_corners<class_ProjectSettings_property_display/window/size/sharp_corners>`                                                                                                 | ``false``                                                                                        |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                           | :ref:`display/window/size/transparent<class_ProjectSettings_property_display/window/size/transparent>`                                                                                                     | ``false``                                                                                        |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
@@ -1286,6 +1294,8 @@ Properties
    | :ref:`int<class_int>`                             | :ref:`physics/common/physics_ticks_per_second<class_ProjectSettings_property_physics/common/physics_ticks_per_second>`                                                                                     | ``60``                                                                                           |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                             | :ref:`rendering/2d/batching/item_buffer_size<class_ProjectSettings_property_rendering/2d/batching/item_buffer_size>`                                                                                       | ``16384``                                                                                        |
+   +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                             | :ref:`rendering/2d/batching/uniform_set_cache_size<class_ProjectSettings_property_rendering/2d/batching/uniform_set_cache_size>`                                                                           | ``256``                                                                                          |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                             | :ref:`rendering/2d/sdf/oversize<class_ProjectSettings_property_rendering/2d/sdf/oversize>`                                                                                                                 | ``1``                                                                                            |
    +---------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+
@@ -2243,6 +2253,8 @@ Default :ref:`AudioBusLayout<class_AudioBusLayout>` resource file to use in the 
 Specifies the audio driver to use. This setting is platform-dependent as each platform supports different audio drivers. If left empty, the default audio driver will be used.
 
 The ``Dummy`` audio driver disables all audio playback and recording, which is useful for non-game applications as it reduces CPU usage. It also prevents the engine from appearing as an application playing audio in the OS' audio mixer.
+
+To query the value that is being used at run-time (which may be overridden by command-line arguments or headless mode), use :ref:`AudioServer.get_driver_name<class_AudioServer_method_get_driver_name>`.
 
 \ **Note:** The driver in use can be overridden at runtime via the ``--audio-driver`` :doc:`command line argument <../tutorials/editor/command_line_tutorial>`.
 
@@ -3976,6 +3988,40 @@ If ``true``, keeps the screen on (even in case of inactivity), so the screensave
 
 ----
 
+.. _class_ProjectSettings_property_display/window/frame_pacing/android/enable_frame_pacing:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **display/window/frame_pacing/android/enable_frame_pacing** = ``true`` :ref:`🔗<class_ProjectSettings_property_display/window/frame_pacing/android/enable_frame_pacing>`
+
+Enable Swappy for stable frame pacing on Android. Highly recommended.
+
+\ **Note:** This option will be forced off when using OpenXR.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_ProjectSettings_property_display/window/frame_pacing/android/swappy_mode:
+
+.. rst-class:: classref-property
+
+:ref:`int<class_int>` **display/window/frame_pacing/android/swappy_mode** = ``2`` :ref:`🔗<class_ProjectSettings_property_display/window/frame_pacing/android/swappy_mode>`
+
+Swappy mode to use. The options are:
+
+- pipeline_forced_on: Try to honor :ref:`Engine.max_fps<class_Engine_property_max_fps>`. Pipelining is always on. This is the same behavior as Desktop PC.
+
+- auto_fps_pipeline_forced_on: Autocalculate max fps. Actual max_fps will be between 0 and :ref:`Engine.max_fps<class_Engine_property_max_fps>`. While this sounds convenient, beware that Swappy will often downgrade max fps until it finds something that can be met and sustained. That means if your game runs between 40fps and 60fps on a 60hz screen, after some time Swappy will downgrade max fps so that the game renders at perfect 30fps.
+
+- auto_fps_auto_pipeline: Same as auto_fps_pipeline_forced_on, but if Swappy detects that rendering is very fast (e.g. it takes < 8ms to render on a 60hz screen) Swappy will disable pipelining to minimize input latency. This is the default.
+
+\ **Note:** If :ref:`Engine.max_fps<class_Engine_property_max_fps>` is 0, actual max_fps will considered as to be the screen's refresh rate (often 60hz, 90hz or 120hz depending on device model and OS settings).
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_ProjectSettings_property_display/window/handheld/orientation:
 
 .. rst-class:: classref-property
@@ -4179,6 +4225,20 @@ If ``true``, allows the window to be resizable by default.
 \ **Note:** Certain window managers can be configured to ignore the non-resizable status of a window. Do not rely on this setting as a guarantee that the window will *never* be resizable.
 
 \ **Note:** This setting is ignored on iOS.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_ProjectSettings_property_display/window/size/sharp_corners:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **display/window/size/sharp_corners** = ``false`` :ref:`🔗<class_ProjectSettings_property_display/window/size/sharp_corners>`
+
+If ``true``, the main window uses sharp corners by default.
+
+\ **Note:** This property is implemented only on Windows (11).
 
 .. rst-class:: classref-item-separator
 
@@ -9696,6 +9756,20 @@ Maximum number of canvas item commands that can be batched into a single draw ca
 
 ----
 
+.. _class_ProjectSettings_property_rendering/2d/batching/uniform_set_cache_size:
+
+.. rst-class:: classref-property
+
+:ref:`int<class_int>` **rendering/2d/batching/uniform_set_cache_size** = ``256`` :ref:`🔗<class_ProjectSettings_property_rendering/2d/batching/uniform_set_cache_size>`
+
+Maximum number of uniform sets that will be cached by the 2D renderer when batching draw calls.
+
+\ **Note:** A project that uses a large number of unique sprite textures per frame may benefit from increasing this value.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_ProjectSettings_property_rendering/2d/sdf/oversize:
 
 .. rst-class:: classref-property
@@ -9782,9 +9856,11 @@ If ``true``, vertices of :ref:`CanvasItem<class_CanvasItem>` nodes will snap to 
 
 :ref:`int<class_int>` **rendering/anti_aliasing/quality/msaa_2d** = ``0`` :ref:`🔗<class_ProjectSettings_property_rendering/anti_aliasing/quality/msaa_2d>`
 
-Sets the number of MSAA samples to use for 2D/Canvas rendering (as a power of two). MSAA is used to reduce aliasing around the edges of polygons. A higher MSAA value results in smoother edges but can be significantly slower on some hardware, especially integrated graphics due to their limited memory bandwidth. This has no effect on shader-induced aliasing or texture aliasing.
+Sets the number of multisample antialiasing (MSAA) samples to use for 2D/Canvas rendering (as a power of two). MSAA is used to reduce aliasing around the edges of polygons. A higher MSAA value results in smoother edges but can be significantly slower on some hardware, especially integrated graphics due to their limited memory bandwidth. This has no effect on shader-induced aliasing or texture aliasing.
 
 \ **Note:** MSAA is only supported in the Forward+ and Mobile rendering methods, not Compatibility.
+
+\ **Note:** This property is only read when the project starts. To set the number of 2D MSAA samples at runtime, set :ref:`Viewport.msaa_2d<class_Viewport_property_msaa_2d>` or use :ref:`RenderingServer.viewport_set_msaa_2d<class_RenderingServer_method_viewport_set_msaa_2d>`.
 
 .. rst-class:: classref-item-separator
 
@@ -9796,7 +9872,9 @@ Sets the number of MSAA samples to use for 2D/Canvas rendering (as a power of tw
 
 :ref:`int<class_int>` **rendering/anti_aliasing/quality/msaa_3d** = ``0`` :ref:`🔗<class_ProjectSettings_property_rendering/anti_aliasing/quality/msaa_3d>`
 
-Sets the number of MSAA samples to use for 3D rendering (as a power of two). MSAA is used to reduce aliasing around the edges of polygons. A higher MSAA value results in smoother edges but can be significantly slower on some hardware, especially integrated graphics due to their limited memory bandwidth. See also :ref:`rendering/scaling_3d/mode<class_ProjectSettings_property_rendering/scaling_3d/mode>` for supersampling, which provides higher quality but is much more expensive. This has no effect on shader-induced aliasing or texture aliasing.
+Sets the number of multisample antialiasing (MSAA) samples to use for 3D rendering (as a power of two). MSAA is used to reduce aliasing around the edges of polygons. A higher MSAA value results in smoother edges but can be significantly slower on some hardware, especially integrated graphics due to their limited memory bandwidth. See also :ref:`rendering/scaling_3d/mode<class_ProjectSettings_property_rendering/scaling_3d/mode>` for supersampling, which provides higher quality but is much more expensive. This has no effect on shader-induced aliasing or texture aliasing.
+
+\ **Note:** This property is only read when the project starts. To set the number of 3D MSAA samples at runtime, set :ref:`Viewport.msaa_3d<class_Viewport_property_msaa_3d>` or use :ref:`RenderingServer.viewport_set_msaa_3d<class_RenderingServer_method_viewport_set_msaa_3d>`.
 
 .. rst-class:: classref-item-separator
 
@@ -9814,6 +9892,8 @@ Another way to combat specular aliasing is to enable :ref:`rendering/anti_aliasi
 
 \ **Note:** Screen-space antialiasing is only supported in the Forward+ and Mobile rendering methods, not Compatibility.
 
+\ **Note:** This property is only read when the project starts. To set the screen-space antialiasing mode at runtime, set :ref:`Viewport.screen_space_aa<class_Viewport_property_screen_space_aa>` on the root :ref:`Viewport<class_Viewport>` instead, or use :ref:`RenderingServer.viewport_set_screen_space_aa<class_RenderingServer_method_viewport_set_screen_space_aa>`.
+
 .. rst-class:: classref-item-separator
 
 ----
@@ -9828,7 +9908,7 @@ If ``true``, uses a fast post-processing filter to make banding significantly le
 
 In some cases, debanding may introduce a slightly noticeable dithering pattern. It's recommended to enable debanding only when actually needed since the dithering pattern will make lossless-compressed screenshots larger.
 
-\ **Note:** This property is only read when the project starts. To set debanding at run-time, set :ref:`Viewport.use_debanding<class_Viewport_property_use_debanding>` on the root :ref:`Viewport<class_Viewport>` instead.
+\ **Note:** This property is only read when the project starts. To set debanding at runtime, set :ref:`Viewport.use_debanding<class_Viewport_property_use_debanding>` on the root :ref:`Viewport<class_Viewport>` instead, or use :ref:`RenderingServer.viewport_set_use_debanding<class_RenderingServer_method_viewport_set_use_debanding>`.
 
 .. rst-class:: classref-item-separator
 
@@ -9840,11 +9920,13 @@ In some cases, debanding may introduce a slightly noticeable dithering pattern. 
 
 :ref:`bool<class_bool>` **rendering/anti_aliasing/quality/use_taa** = ``false`` :ref:`🔗<class_ProjectSettings_property_rendering/anti_aliasing/quality/use_taa>`
 
-Enables Temporal Anti-Aliasing for the default screen :ref:`Viewport<class_Viewport>`. TAA works by jittering the camera and accumulating the images of the last rendered frames, motion vector rendering is used to account for camera and object motion. Enabling TAA can make the image blurrier, which is partially counteracted by automatically using a negative mipmap LOD bias (see :ref:`rendering/textures/default_filters/texture_mipmap_bias<class_ProjectSettings_property_rendering/textures/default_filters/texture_mipmap_bias>`).
+Enables temporal antialiasing for the default screen :ref:`Viewport<class_Viewport>`. TAA works by jittering the camera and accumulating the images of the last rendered frames, motion vector rendering is used to account for camera and object motion. Enabling TAA can make the image blurrier, which is partially counteracted by automatically using a negative mipmap LOD bias (see :ref:`rendering/textures/default_filters/texture_mipmap_bias<class_ProjectSettings_property_rendering/textures/default_filters/texture_mipmap_bias>`).
 
 \ **Note:** The implementation is not complete yet. Some visual instances such as particles and skinned meshes may show ghosting artifacts in motion.
 
 \ **Note:** TAA is only supported in the Forward+ rendering method, not Mobile or Compatibility.
+
+\ **Note:** This property is only read when the project starts. To set TAA at runtime, set :ref:`Viewport.use_taa<class_Viewport_property_use_taa>` on the root :ref:`Viewport<class_Viewport>` instead, or use :ref:`RenderingServer.viewport_set_use_taa<class_RenderingServer_method_viewport_set_use_taa>`.
 
 .. rst-class:: classref-item-separator
 
@@ -11780,9 +11862,9 @@ If ``true``, the GPU texture compressor will cache the local RenderingDevice and
 
 If ``true``, the texture importer will utilize the GPU for compressing textures, improving the import time of large images.
 
-\ **Note:** This setting requires either Vulkan or D3D12 available as a rendering backend.
+\ **Note:** This only functions on a device which supports either Vulkan, D3D12, or Metal available as a rendering backend.
 
-\ **Note:** Currently this only affects BC1 and BC6H compression, which are used on Desktop and Console for fully opaque and HDR images respectively.
+\ **Note:** Currently this only affects certain compressed formats (BC1, BC4, and BC6), all of which are exclusive to desktop platforms and consoles.
 
 .. rst-class:: classref-item-separator
 
