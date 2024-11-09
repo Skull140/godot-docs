@@ -996,11 +996,11 @@ enum **LayoutDirection**: :ref:`🔗<enum_Control_LayoutDirection>`
 
 Automatic layout direction, determined from the parent control layout direction.
 
-.. _class_Control_constant_LAYOUT_DIRECTION_LOCALE:
+.. _class_Control_constant_LAYOUT_DIRECTION_APPLICATION_LOCALE:
 
 .. rst-class:: classref-enumeration-constant
 
-:ref:`LayoutDirection<enum_Control_LayoutDirection>` **LAYOUT_DIRECTION_LOCALE** = ``1``
+:ref:`LayoutDirection<enum_Control_LayoutDirection>` **LAYOUT_DIRECTION_APPLICATION_LOCALE** = ``1``
 
 Automatic layout direction, determined from the current locale.
 
@@ -1019,6 +1019,32 @@ Left-to-right layout direction.
 :ref:`LayoutDirection<enum_Control_LayoutDirection>` **LAYOUT_DIRECTION_RTL** = ``3``
 
 Right-to-left layout direction.
+
+.. _class_Control_constant_LAYOUT_DIRECTION_SYSTEM_LOCALE:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`LayoutDirection<enum_Control_LayoutDirection>` **LAYOUT_DIRECTION_SYSTEM_LOCALE** = ``4``
+
+Automatic layout direction, determined from the system locale.
+
+.. _class_Control_constant_LAYOUT_DIRECTION_MAX:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`LayoutDirection<enum_Control_LayoutDirection>` **LAYOUT_DIRECTION_MAX** = ``5``
+
+Represents the size of the :ref:`LayoutDirection<enum_Control_LayoutDirection>` enum.
+
+.. _class_Control_constant_LAYOUT_DIRECTION_LOCALE:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`LayoutDirection<enum_Control_LayoutDirection>` **LAYOUT_DIRECTION_LOCALE** = ``1``
+
+**Deprecated:** Use :ref:`LAYOUT_DIRECTION_APPLICATION_LOCALE<class_Control_constant_LAYOUT_DIRECTION_APPLICATION_LOCALE>` instead.
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -1900,7 +1926,7 @@ When set, this property gives the highest priority to the type of the specified 
 
 Defines if tooltip text should automatically change to its translated version depending on the current locale. Uses the same auto translate mode as this control when set to :ref:`Node.AUTO_TRANSLATE_MODE_INHERIT<class_Node_constant_AUTO_TRANSLATE_MODE_INHERIT>`.
 
-\ **Note:** When the tooltip is customized using :ref:`_make_custom_tooltip<class_Control_private_method__make_custom_tooltip>`, this auto translate mode is applied automatically to the returned control.
+\ **Note:** Tooltips customized using :ref:`_make_custom_tooltip<class_Control_private_method__make_custom_tooltip>` do not use this auto translate mode automatically.
 
 .. rst-class:: classref-item-separator
 
@@ -2011,7 +2037,7 @@ Godot calls this method to pass you the ``data`` from a control's :ref:`_get_dra
 
     public override bool _CanDropData(Vector2 atPosition, Variant data)
     {
-        return data.VariantType == Variant.Type.Dictionary && dict.AsGodotDictionary().ContainsKey("color");
+        return data.VariantType == Variant.Type.Dictionary && data.AsGodotDictionary().ContainsKey("color");
     }
     
     public override void _DropData(Vector2 atPosition, Variant data)
