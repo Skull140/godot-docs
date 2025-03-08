@@ -178,7 +178,7 @@ The sort order for this composition layer. Higher numbers will be shown in front
 
 If enabled, an Android surface will be created (with the dimensions from :ref:`android_surface_size<class_OpenXRCompositionLayer_property_android_surface_size>`) which will provide the 2D content for the composition layer, rather than using :ref:`layer_viewport<class_OpenXRCompositionLayer_property_layer_viewport>`.
 
-See :ref:`get_android_surface<class_OpenXRCompositionLayer_method_get_android_surface>` for information about how to get the surface so that your application can draw to it.
+See :ref:`get_android_surface()<class_OpenXRCompositionLayer_method_get_android_surface>` for information about how to get the surface so that your application can draw to it.
 
 \ **Note:** This will only work in Android builds.
 
@@ -225,7 +225,7 @@ Returns ``Vector2(-1.0, -1.0)`` if the ray doesn't intersect.
 
 :ref:`bool<class_bool>` **is_natively_supported**\ (\ ) |const| :ref:`🔗<class_OpenXRCompositionLayer_method_is_natively_supported>`
 
-Returns true if the OpenXR runtime natively supports this composition layer type.
+Returns ``true`` if the OpenXR runtime natively supports this composition layer type.
 
 \ **Note:** This will only return an accurate result after the OpenXR session has started.
 
