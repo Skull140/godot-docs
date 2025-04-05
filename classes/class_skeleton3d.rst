@@ -61,6 +61,8 @@ Methods
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                                            | :ref:`add_bone<class_Skeleton3D_method_add_bone>`\ (\ name\: :ref:`String<class_String>`\ )                                                                                                                                                                         |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                           | :ref:`advance<class_Skeleton3D_method_advance>`\ (\ delta\: :ref:`float<class_float>`\ )                                                                                                                                                                            |
+   +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`clear_bones<class_Skeleton3D_method_clear_bones>`\ (\ )                                                                                                                                                                                                       |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`clear_bones_global_pose_override<class_Skeleton3D_method_clear_bones_global_pose_override>`\ (\ )                                                                                                                                                             |
@@ -169,7 +171,7 @@ Signals
 
 **bone_enabled_changed**\ (\ bone_idx\: :ref:`int<class_int>`\ ) :ref:`🔗<class_Skeleton3D_signal_bone_enabled_changed>`
 
-Emitted when the bone at ``bone_idx`` is toggled with :ref:`set_bone_enabled<class_Skeleton3D_method_set_bone_enabled>`. Use :ref:`is_bone_enabled<class_Skeleton3D_method_is_bone_enabled>` to check the new value.
+Emitted when the bone at ``bone_idx`` is toggled with :ref:`set_bone_enabled()<class_Skeleton3D_method_set_bone_enabled>`. Use :ref:`is_bone_enabled()<class_Skeleton3D_method_is_bone_enabled>` to check the new value.
 
 .. rst-class:: classref-item-separator
 
@@ -198,6 +200,18 @@ Emitted when the bone at ``bone_idx`` is toggled with :ref:`set_bone_enabled<cla
 Emitted when the pose is updated.
 
 \ **Note:** During the update process, this signal is not fired, so modification by :ref:`SkeletonModifier3D<class_SkeletonModifier3D>` is not detected.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Skeleton3D_signal_rest_updated:
+
+.. rst-class:: classref-signal
+
+**rest_updated**\ (\ ) :ref:`🔗<class_Skeleton3D_signal_rest_updated>`
+
+Emitted when the rest is updated.
 
 .. rst-class:: classref-item-separator
 
@@ -256,6 +270,14 @@ Set a flag to process modification during physics frames (see :ref:`Node.NOTIFIC
 
 Set a flag to process modification during process frames (see :ref:`Node.NOTIFICATION_INTERNAL_PROCESS<class_Node_constant_NOTIFICATION_INTERNAL_PROCESS>`).
 
+.. _class_Skeleton3D_constant_MODIFIER_CALLBACK_MODE_PROCESS_MANUAL:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`ModifierCallbackModeProcess<enum_Skeleton3D_ModifierCallbackModeProcess>` **MODIFIER_CALLBACK_MODE_PROCESS_MANUAL** = ``2``
+
+Do not process modification. Use :ref:`advance()<class_Skeleton3D_method_advance>` to process the modification manually.
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -295,7 +317,7 @@ Property Descriptions
 
 **Deprecated:** This property may be changed or removed in future versions.
 
-If you follow the recommended workflow and explicitly have :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>` as a child of **Skeleton3D**, you can control whether it is affected by raycasting without running :ref:`physical_bones_start_simulation<class_Skeleton3D_method_physical_bones_start_simulation>`, by its :ref:`SkeletonModifier3D.active<class_SkeletonModifier3D_property_active>`.
+If you follow the recommended workflow and explicitly have :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>` as a child of **Skeleton3D**, you can control whether it is affected by raycasting without running :ref:`physical_bones_start_simulation()<class_Skeleton3D_method_physical_bones_start_simulation>`, by its :ref:`SkeletonModifier3D.active<class_SkeletonModifier3D_property_active>`.
 
 However, for old (deprecated) configurations, **Skeleton3D** has an internal virtual :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>` for compatibility. This property controls the internal virtual :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>`'s :ref:`SkeletonModifier3D.active<class_SkeletonModifier3D_property_active>`.
 
@@ -370,6 +392,20 @@ Method Descriptions
 Adds a new bone with the given name. Returns the new bone's index, or ``-1`` if this method fails.
 
 \ **Note:** Bone names should be unique, non empty, and cannot include the ``:`` and ``/`` characters.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Skeleton3D_method_advance:
+
+.. rst-class:: classref-method
+
+|void| **advance**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_Skeleton3D_method_advance>`
+
+Manually advance the child :ref:`SkeletonModifier3D<class_SkeletonModifier3D>`\ s by the specified time (in seconds).
+
+\ **Note:** The ``delta`` is temporarily accumulated in the **Skeleton3D**, and the deferred process uses the accumulated value to process the modification.
 
 .. rst-class:: classref-item-separator
 
@@ -839,7 +875,7 @@ Disables the pose for the bone at ``bone_idx`` if ``false``, enables the bone po
 
 Sets the global pose transform, ``pose``, for the bone at ``bone_idx``.
 
-\ **Note:** If other bone poses have been changed, this method executes a dirty poses recalculation and will cause performance to deteriorate. If you know that multiple global poses will be applied, consider using :ref:`set_bone_pose<class_Skeleton3D_method_set_bone_pose>` with precalculation.
+\ **Note:** If other bone poses have been changed, this method executes a dirty poses recalculation and will cause performance to deteriorate. If you know that multiple global poses will be applied, consider using :ref:`set_bone_pose()<class_Skeleton3D_method_set_bone_pose>` with precalculation.
 
 .. rst-class:: classref-item-separator
 
@@ -857,7 +893,7 @@ Sets the global pose transform, ``pose``, for the bone at ``bone_idx``.
 
 \ ``amount`` is the interpolation strength that will be used when applying the pose, and ``persistent`` determines if the applied pose will remain.
 
-\ **Note:** The pose transform needs to be a global pose! To convert a world transform from a :ref:`Node3D<class_Node3D>` to a global bone pose, multiply the :ref:`Transform3D.affine_inverse<class_Transform3D_method_affine_inverse>` of the node's :ref:`Node3D.global_transform<class_Node3D_property_global_transform>` by the desired world transform.
+\ **Note:** The pose transform needs to be a global pose! To convert a world transform from a :ref:`Node3D<class_Node3D>` to a global bone pose, multiply the :ref:`Transform3D.affine_inverse()<class_Transform3D_method_affine_inverse>` of the node's :ref:`Node3D.global_transform<class_Node3D_property_global_transform>` by the desired world transform.
 
 .. rst-class:: classref-item-separator
 
