@@ -41,6 +41,8 @@ Properties
    +----------------------------------------------------+----------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                            | clip_contents                                                                                      | ``true`` (overrides :ref:`Control<class_Control_property_clip_contents>`) |
    +----------------------------------------------------+----------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                            | :ref:`draw_focus_border<class_ScrollContainer_property_draw_focus_border>`                         | ``false``                                                                 |
+   +----------------------------------------------------+----------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                            | :ref:`follow_focus<class_ScrollContainer_property_follow_focus>`                                   | ``false``                                                                 |
    +----------------------------------------------------+----------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------+
    | :ref:`ScrollMode<enum_ScrollContainer_ScrollMode>` | :ref:`horizontal_scroll_mode<class_ScrollContainer_property_horizontal_scroll_mode>`               | ``1``                                                                     |
@@ -82,6 +84,8 @@ Theme Properties
 .. table::
    :widths: auto
 
+   +---------------------------------+-------------------------------------------------------+
+   | :ref:`StyleBox<class_StyleBox>` | :ref:`focus<class_ScrollContainer_theme_style_focus>` |
    +---------------------------------+-------------------------------------------------------+
    | :ref:`StyleBox<class_StyleBox>` | :ref:`panel<class_ScrollContainer_theme_style_panel>` |
    +---------------------------------+-------------------------------------------------------+
@@ -183,6 +187,23 @@ Combines :ref:`SCROLL_MODE_AUTO<class_ScrollContainer_constant_SCROLL_MODE_AUTO>
 Property Descriptions
 ---------------------
 
+.. _class_ScrollContainer_property_draw_focus_border:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **draw_focus_border** = ``false`` :ref:`🔗<class_ScrollContainer_property_draw_focus_border>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_draw_focus_border**\ (\ value\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **get_draw_focus_border**\ (\ )
+
+If ``true``, :ref:`focus<class_ScrollContainer_theme_style_focus>` is drawn when the ScrollContainer or one of its descendant nodes is focused.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_ScrollContainer_property_follow_focus:
 
 .. rst-class:: classref-property
@@ -247,7 +268,7 @@ Deadzone for touch scrolling. Lower deadzone makes the scrolling more sensitive.
 
 The current horizontal scroll value.
 
-\ **Note:** If you are setting this value in the :ref:`Node._ready<class_Node_private_method__ready>` function or earlier, it needs to be wrapped with :ref:`Object.set_deferred<class_Object_method_set_deferred>`, since scroll bar's :ref:`Range.max_value<class_Range_property_max_value>` is not initialized yet.
+\ **Note:** If you are setting this value in the :ref:`Node._ready()<class_Node_private_method__ready>` function or earlier, it needs to be wrapped with :ref:`Object.set_deferred()<class_Object_method_set_deferred>`, since scroll bar's :ref:`Range.max_value<class_Range_property_max_value>` is not initialized yet.
 
 ::
 
@@ -390,6 +411,18 @@ Returns the vertical scrollbar :ref:`VScrollBar<class_VScrollBar>` of this **Scr
 
 Theme Property Descriptions
 ---------------------------
+
+.. _class_ScrollContainer_theme_style_focus:
+
+.. rst-class:: classref-themeproperty
+
+:ref:`StyleBox<class_StyleBox>` **focus** :ref:`🔗<class_ScrollContainer_theme_style_focus>`
+
+The focus border :ref:`StyleBox<class_StyleBox>` of the **ScrollContainer**. Only used if :ref:`draw_focus_border<class_ScrollContainer_property_draw_focus_border>` is ``true``.
+
+.. rst-class:: classref-item-separator
+
+----
 
 .. _class_ScrollContainer_theme_style_panel:
 
