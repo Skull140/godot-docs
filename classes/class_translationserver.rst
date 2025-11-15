@@ -59,6 +59,8 @@ Methods
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                             | :ref:`compare_locales<class_TranslationServer_method_compare_locales>`\ (\ locale_a\: :ref:`String<class_String>`, locale_b\: :ref:`String<class_String>`\ ) |const|                                                                                                        |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                       | :ref:`format_number<class_TranslationServer_method_format_number>`\ (\ number\: :ref:`String<class_String>`, locale\: :ref:`String<class_String>`\ ) |const|                                                                                                                |
+   +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`get_all_countries<class_TranslationServer_method_get_all_countries>`\ (\ ) |const|                                                                                                                                                                                    |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`PackedStringArray<class_PackedStringArray>` | :ref:`get_all_languages<class_TranslationServer_method_get_all_languages>`\ (\ ) |const|                                                                                                                                                                                    |
@@ -77,6 +79,10 @@ Methods
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`TranslationDomain<class_TranslationDomain>` | :ref:`get_or_add_domain<class_TranslationServer_method_get_or_add_domain>`\ (\ domain\: :ref:`StringName<class_StringName>`\ )                                                                                                                                              |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                       | :ref:`get_percent_sign<class_TranslationServer_method_get_percent_sign>`\ (\ locale\: :ref:`String<class_String>`\ ) |const|                                                                                                                                                |
+   +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                       | :ref:`get_plural_rules<class_TranslationServer_method_get_plural_rules>`\ (\ locale\: :ref:`String<class_String>`\ ) |const|                                                                                                                                                |
+   +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`String<class_String>`                       | :ref:`get_script_name<class_TranslationServer_method_get_script_name>`\ (\ script\: :ref:`String<class_String>`\ ) |const|                                                                                                                                                  |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`String<class_String>`                       | :ref:`get_tool_locale<class_TranslationServer_method_get_tool_locale>`\ (\ )                                                                                                                                                                                                |
@@ -84,6 +90,8 @@ Methods
    | :ref:`Translation<class_Translation>`             | :ref:`get_translation_object<class_TranslationServer_method_get_translation_object>`\ (\ locale\: :ref:`String<class_String>`\ )                                                                                                                                            |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                           | :ref:`has_domain<class_TranslationServer_method_has_domain>`\ (\ domain\: :ref:`StringName<class_StringName>`\ ) |const|                                                                                                                                                    |
+   +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                       | :ref:`parse_number<class_TranslationServer_method_parse_number>`\ (\ number\: :ref:`String<class_String>`, locale\: :ref:`String<class_String>`\ ) |const|                                                                                                                  |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`StringName<class_StringName>`               | :ref:`pseudolocalize<class_TranslationServer_method_pseudolocalize>`\ (\ message\: :ref:`StringName<class_StringName>`\ ) |const|                                                                                                                                           |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -95,7 +103,7 @@ Methods
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                            | :ref:`set_locale<class_TranslationServer_method_set_locale>`\ (\ locale\: :ref:`String<class_String>`\ )                                                                                                                                                                    |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`String<class_String>`                       | :ref:`standardize_locale<class_TranslationServer_method_standardize_locale>`\ (\ locale\: :ref:`String<class_String>`\ ) |const|                                                                                                                                            |
+   | :ref:`String<class_String>`                       | :ref:`standardize_locale<class_TranslationServer_method_standardize_locale>`\ (\ locale\: :ref:`String<class_String>`, add_defaults\: :ref:`bool<class_bool>` = false\ ) |const|                                                                                            |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`StringName<class_StringName>`               | :ref:`translate<class_TranslationServer_method_translate>`\ (\ message\: :ref:`StringName<class_StringName>`, context\: :ref:`StringName<class_StringName>` = &""\ ) |const|                                                                                                |
    +---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -164,6 +172,18 @@ Removes all translations from the main translation domain.
 :ref:`int<class_int>` **compare_locales**\ (\ locale_a\: :ref:`String<class_String>`, locale_b\: :ref:`String<class_String>`\ ) |const| :ref:`🔗<class_TranslationServer_method_compare_locales>`
 
 Compares two locales and returns a similarity score between ``0`` (no match) and ``10`` (full match).
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_TranslationServer_method_format_number:
+
+.. rst-class:: classref-method
+
+:ref:`String<class_String>` **format_number**\ (\ number\: :ref:`String<class_String>`, locale\: :ref:`String<class_String>`\ ) |const| :ref:`🔗<class_TranslationServer_method_format_number>`
+
+Converts a number from Western Arabic (0..9) to the numeral system used in the given ``locale``.
 
 .. rst-class:: classref-item-separator
 
@@ -249,7 +269,7 @@ Returns an array of all loaded locales of the project.
 
 Returns the current locale of the project.
 
-See also :ref:`OS.get_locale<class_OS_method_get_locale>` and :ref:`OS.get_locale_language<class_OS_method_get_locale_language>` to query the locale of the user system.
+See also :ref:`OS.get_locale()<class_OS_method_get_locale>` and :ref:`OS.get_locale_language()<class_OS_method_get_locale_language>` to query the locale of the user system.
 
 .. rst-class:: classref-item-separator
 
@@ -279,6 +299,30 @@ Returns the translation domain with the specified name. An empty translation dom
 
 ----
 
+.. _class_TranslationServer_method_get_percent_sign:
+
+.. rst-class:: classref-method
+
+:ref:`String<class_String>` **get_percent_sign**\ (\ locale\: :ref:`String<class_String>`\ ) |const| :ref:`🔗<class_TranslationServer_method_get_percent_sign>`
+
+Returns the percent sign used in the given ``locale``.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_TranslationServer_method_get_plural_rules:
+
+.. rst-class:: classref-method
+
+:ref:`String<class_String>` **get_plural_rules**\ (\ locale\: :ref:`String<class_String>`\ ) |const| :ref:`🔗<class_TranslationServer_method_get_plural_rules>`
+
+Returns the default plural rules for the ``locale``.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_TranslationServer_method_get_script_name:
 
 .. rst-class:: classref-method
@@ -299,7 +343,7 @@ Returns a readable script name for the ``script`` code.
 
 Returns the current locale of the editor.
 
-\ **Note:** When called from an exported project returns the same value as :ref:`get_locale<class_TranslationServer_method_get_locale>`.
+\ **Note:** When called from an exported project returns the same value as :ref:`get_locale()<class_TranslationServer_method_get_locale>`.
 
 .. rst-class:: classref-item-separator
 
@@ -324,6 +368,18 @@ Returns the :ref:`Translation<class_Translation>` instance that best matches ``l
 :ref:`bool<class_bool>` **has_domain**\ (\ domain\: :ref:`StringName<class_StringName>`\ ) |const| :ref:`🔗<class_TranslationServer_method_has_domain>`
 
 Returns ``true`` if a translation domain with the specified name exists.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_TranslationServer_method_parse_number:
+
+.. rst-class:: classref-method
+
+:ref:`String<class_String>` **parse_number**\ (\ number\: :ref:`String<class_String>`, locale\: :ref:`String<class_String>`\ ) |const| :ref:`🔗<class_TranslationServer_method_parse_number>`
+
+Converts ``number`` from the numeral system used in the given ``locale`` to Western Arabic (0..9).
 
 .. rst-class:: classref-item-separator
 
@@ -399,9 +455,9 @@ If translations have been loaded beforehand for the new locale, they will be app
 
 .. rst-class:: classref-method
 
-:ref:`String<class_String>` **standardize_locale**\ (\ locale\: :ref:`String<class_String>`\ ) |const| :ref:`🔗<class_TranslationServer_method_standardize_locale>`
+:ref:`String<class_String>` **standardize_locale**\ (\ locale\: :ref:`String<class_String>`, add_defaults\: :ref:`bool<class_bool>` = false\ ) |const| :ref:`🔗<class_TranslationServer_method_standardize_locale>`
 
-Returns a ``locale`` string standardized to match known locales (e.g. ``en-US`` would be matched to ``en_US``).
+Returns a ``locale`` string standardized to match known locales (e.g. ``en-US`` would be matched to ``en_US``). If ``add_defaults`` is ``true``, the locale may have a default script or country added.
 
 .. rst-class:: classref-item-separator
 
@@ -434,6 +490,7 @@ The number ``n`` is the number or quantity of the plural object. It will be used
 \ **Note:** This method always uses the main translation domain.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
