@@ -33,9 +33,11 @@ Methods
 .. table::
    :widths: auto
 
-   +-----------------------------------+-----------------------------------------------------------------------------+
-   | :ref:`JavaClass<class_JavaClass>` | :ref:`get_java_class<class_JavaObject_method_get_java_class>`\ (\ ) |const| |
-   +-----------------------------------+-----------------------------------------------------------------------------+
+   +-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`JavaClass<class_JavaClass>` | :ref:`get_java_class<class_JavaObject_method_get_java_class>`\ (\ ) |const|                                                 |
+   +-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`           | :ref:`has_java_method<class_JavaObject_method_has_java_method>`\ (\ method\: :ref:`StringName<class_StringName>`\ ) |const| |
+   +-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -54,7 +56,20 @@ Method Descriptions
 
 Returns the :ref:`JavaClass<class_JavaClass>` that this object is an instance of.
 
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_JavaObject_method_has_java_method:
+
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **has_java_method**\ (\ method\: :ref:`StringName<class_StringName>`\ ) |const| :ref:`🔗<class_JavaObject_method_has_java_method>`
+
+Returns ``true`` if the given ``method`` name exists in the object's Java methods.
+
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
