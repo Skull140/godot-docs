@@ -102,6 +102,8 @@ Methods
    +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                | :ref:`reset_instance_physics_interpolation<class_MultiMesh_method_reset_instance_physics_interpolation>`\ (\ instance\: :ref:`int<class_int>`\ )                                                                           |
    +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                | :ref:`reset_instances_physics_interpolation<class_MultiMesh_method_reset_instances_physics_interpolation>`\ (\ )                                                                                                           |
+   +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                | :ref:`set_buffer_interpolated<class_MultiMesh_method_set_buffer_interpolated>`\ (\ buffer_curr\: :ref:`PackedFloat32Array<class_PackedFloat32Array>`, buffer_prev\: :ref:`PackedFloat32Array<class_PackedFloat32Array>`\ ) |
    +---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                | :ref:`set_instance_color<class_MultiMesh_method_set_instance_color>`\ (\ instance\: :ref:`int<class_int>`, color\: :ref:`Color<class_Color>`\ )                                                                            |
@@ -192,9 +194,13 @@ Property Descriptions
 
 .. container:: contribute
 
-	There is currently no description for this property. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedFloat32Array<class_PackedFloat32Array>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedFloat32Array<class_PackedFloat32Array>` for more details.
 
 .. rst-class:: classref-item-separator
 
@@ -206,11 +212,15 @@ Property Descriptions
 
 :ref:`PackedColorArray<class_PackedColorArray>` **color_array** :ref:`🔗<class_MultiMesh_property_color_array>`
 
-**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_color<class_MultiMesh_method_set_instance_color>` and :ref:`get_instance_color<class_MultiMesh_method_get_instance_color>` instead.
+**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_color()<class_MultiMesh_method_set_instance_color>` and :ref:`get_instance_color()<class_MultiMesh_method_get_instance_color>` instead.
 
 Array containing each :ref:`Color<class_Color>` used by all instances of this mesh.
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedColorArray<class_PackedColorArray>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedColorArray<class_PackedColorArray>` for more details.
 
 .. rst-class:: classref-item-separator
 
@@ -239,11 +249,15 @@ Custom AABB for this MultiMesh resource. Setting this manually prevents costly r
 
 :ref:`PackedColorArray<class_PackedColorArray>` **custom_data_array** :ref:`🔗<class_MultiMesh_property_custom_data_array>`
 
-**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_custom_data<class_MultiMesh_method_set_instance_custom_data>` and :ref:`get_instance_custom_data<class_MultiMesh_method_get_instance_custom_data>` instead.
+**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_custom_data()<class_MultiMesh_method_set_instance_custom_data>` and :ref:`get_instance_custom_data()<class_MultiMesh_method_get_instance_custom_data>` instead.
 
 Array containing each custom data value used by all instances of this mesh, as a :ref:`PackedColorArray<class_PackedColorArray>`.
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedColorArray<class_PackedColorArray>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedColorArray<class_PackedColorArray>` for more details.
 
 .. rst-class:: classref-item-separator
 
@@ -281,7 +295,7 @@ By default, all instances are drawn but you can limit this with :ref:`visible_in
 
 :ref:`Mesh<class_Mesh>` resource to be instanced.
 
-The looks of the individual instances can be modified using :ref:`set_instance_color<class_MultiMesh_method_set_instance_color>` and :ref:`set_instance_custom_data<class_MultiMesh_method_set_instance_custom_data>`.
+The looks of the individual instances can be modified using :ref:`set_instance_color()<class_MultiMesh_method_set_instance_color>` and :ref:`set_instance_custom_data()<class_MultiMesh_method_set_instance_custom_data>`.
 
 .. rst-class:: classref-item-separator
 
@@ -314,11 +328,15 @@ When using low physics tick rates (typically below 20) or high rates of object r
 
 :ref:`PackedVector2Array<class_PackedVector2Array>` **transform_2d_array** :ref:`🔗<class_MultiMesh_property_transform_2d_array>`
 
-**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_transform_2d<class_MultiMesh_method_set_instance_transform_2d>` and :ref:`get_instance_transform_2d<class_MultiMesh_method_get_instance_transform_2d>` instead.
+**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_transform_2d()<class_MultiMesh_method_set_instance_transform_2d>` and :ref:`get_instance_transform_2d()<class_MultiMesh_method_get_instance_transform_2d>` instead.
 
 Array containing each :ref:`Transform2D<class_Transform2D>` value used by all instances of this mesh, as a :ref:`PackedVector2Array<class_PackedVector2Array>`. Each transform is divided into 3 :ref:`Vector2<class_Vector2>` values corresponding to the transforms' ``x``, ``y``, and ``origin``.
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector2Array<class_PackedVector2Array>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector2Array<class_PackedVector2Array>` for more details.
 
 .. rst-class:: classref-item-separator
 
@@ -330,11 +348,15 @@ Array containing each :ref:`Transform2D<class_Transform2D>` value used by all in
 
 :ref:`PackedVector3Array<class_PackedVector3Array>` **transform_array** :ref:`🔗<class_MultiMesh_property_transform_array>`
 
-**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_transform<class_MultiMesh_method_set_instance_transform>` and :ref:`get_instance_transform<class_MultiMesh_method_get_instance_transform>` instead.
+**Deprecated:** Accessing this property is very slow. Use :ref:`set_instance_transform()<class_MultiMesh_method_set_instance_transform>` and :ref:`get_instance_transform()<class_MultiMesh_method_get_instance_transform>` instead.
 
 Array containing each :ref:`Transform3D<class_Transform3D>` value used by all instances of this mesh, as a :ref:`PackedVector3Array<class_PackedVector3Array>`. Each transform is divided into 4 :ref:`Vector3<class_Vector3>` values corresponding to the transforms' ``x``, ``y``, ``z``, and ``origin``.
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector3Array<class_PackedVector3Array>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector3Array<class_PackedVector3Array>` for more details.
 
 .. rst-class:: classref-item-separator
 
@@ -368,7 +390,7 @@ Format of transform used to transform mesh, either 2D or 3D.
 - |void| **set_use_colors**\ (\ value\: :ref:`bool<class_bool>`\ )
 - :ref:`bool<class_bool>` **is_using_colors**\ (\ )
 
-If ``true``, the **MultiMesh** will use color data (see :ref:`set_instance_color<class_MultiMesh_method_set_instance_color>`). Can only be set when :ref:`instance_count<class_MultiMesh_property_instance_count>` is ``0`` or less. This means that you need to call this method before setting the instance count, or temporarily reset it to ``0``.
+If ``true``, the **MultiMesh** will use color data (see :ref:`set_instance_color()<class_MultiMesh_method_set_instance_color>`). Can only be set when :ref:`instance_count<class_MultiMesh_property_instance_count>` is ``0`` or less. This means that you need to call this method before setting the instance count, or temporarily reset it to ``0``.
 
 .. rst-class:: classref-item-separator
 
@@ -385,7 +407,7 @@ If ``true``, the **MultiMesh** will use color data (see :ref:`set_instance_color
 - |void| **set_use_custom_data**\ (\ value\: :ref:`bool<class_bool>`\ )
 - :ref:`bool<class_bool>` **is_using_custom_data**\ (\ )
 
-If ``true``, the **MultiMesh** will use custom data (see :ref:`set_instance_custom_data<class_MultiMesh_method_set_instance_custom_data>`). Can only be set when :ref:`instance_count<class_MultiMesh_property_instance_count>` is ``0`` or less. This means that you need to call this method before setting the instance count, or temporarily reset it to ``0``.
+If ``true``, the **MultiMesh** will use custom data (see :ref:`set_instance_custom_data()<class_MultiMesh_method_set_instance_custom_data>`). Can only be set when :ref:`instance_count<class_MultiMesh_property_instance_count>` is ``0`` or less. This means that you need to call this method before setting the instance count, or temporarily reset it to ``0``.
 
 .. rst-class:: classref-item-separator
 
@@ -487,6 +509,20 @@ This allows you to move instances instantaneously, and should usually be used wh
 
 ----
 
+.. _class_MultiMesh_method_reset_instances_physics_interpolation:
+
+.. rst-class:: classref-method
+
+|void| **reset_instances_physics_interpolation**\ (\ ) :ref:`🔗<class_MultiMesh_method_reset_instances_physics_interpolation>`
+
+When using *physics interpolation*, this function allows you to prevent interpolation for all instances in the current physics tick.
+
+This allows you to move all instances instantaneously, and should usually be used when initially placing instances to prevent graphical glitches.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_MultiMesh_method_set_buffer_interpolated:
 
 .. rst-class:: classref-method
@@ -513,7 +549,7 @@ Sets the color of a specific instance by *multiplying* the mesh's existing verte
 
 \ **Note:** Each component is stored in 32 bits in the Forward+ and Mobile rendering methods, but is packed into 16 bits in the Compatibility rendering method.
 
-For the color to take effect, ensure that :ref:`use_colors<class_MultiMesh_property_use_colors>` is ``true`` on the **MultiMesh** and :ref:`BaseMaterial3D.vertex_color_use_as_albedo<class_BaseMaterial3D_property_vertex_color_use_as_albedo>` is ``true`` on the material. If you intend to set an absolute color instead of tinting, make sure the material's albedo color is set to pure white (``Color(1, 1, 1)``).
+For the color to take effect, ensure that :ref:`use_colors<class_MultiMesh_property_use_colors>` is ``true`` on the **MultiMesh** and :ref:`BaseMaterial3D.vertex_color_use_as_albedo<class_BaseMaterial3D_property_vertex_color_use_as_albedo>` is ``true`` on the material. If you intend to set an absolute color instead of tinting, make sure the material's albedo color is set to pure white (\ ``Color(1, 1, 1)``).
 
 .. rst-class:: classref-item-separator
 
@@ -558,6 +594,7 @@ Sets the :ref:`Transform3D<class_Transform3D>` for a specific instance.
 Sets the :ref:`Transform2D<class_Transform2D>` for a specific instance.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
