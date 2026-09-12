@@ -22,7 +22,9 @@ An input field for numbers.
 Description
 -----------
 
-**SpinBox** is a numerical input text field. It allows entering integers and floating-point numbers.
+**SpinBox** is a numerical input text field. It allows entering integers and floating-point numbers. The **SpinBox** also has up and down buttons that can be clicked to increase or decrease the value. The value can also be changed by dragging the mouse up or down over the **SpinBox**'s arrows.
+
+Additionally, mathematical expressions can be entered. These are evaluated when the user presses :kbd:`Enter` while editing the **SpinBox**'s text field. This uses the :ref:`Expression<class_Expression>` class to parse and evaluate the expression. The result of the expression is then set as the value of the **SpinBox**. Some examples of valid expressions are ``5 + 2 * 3``, ``pow(2, 4)``, and ``PI + sin(0.5)``. Expressions are case-sensitive.
 
 \ **Example:** Create a **SpinBox**, disable its context menu and set its text alignment to right.
 
@@ -53,7 +55,7 @@ See :ref:`Range<class_Range>` class for more options over the **SpinBox**.
 
 \ **Note:** **SpinBox** relies on an underlying :ref:`LineEdit<class_LineEdit>` node. To theme a **SpinBox**'s background, add theme items for :ref:`LineEdit<class_LineEdit>` and customize them. The :ref:`LineEdit<class_LineEdit>` has the ``SpinBoxInnerLineEdit`` theme variation, so that you can give it a distinct appearance from regular :ref:`LineEdit<class_LineEdit>`\ s.
 
-\ **Note:** If you want to implement drag and drop for the underlying :ref:`LineEdit<class_LineEdit>`, you can use :ref:`Control.set_drag_forwarding<class_Control_method_set_drag_forwarding>` on the node returned by :ref:`get_line_edit<class_SpinBox_method_get_line_edit>`.
+\ **Note:** If you want to implement drag and drop for the underlying :ref:`LineEdit<class_LineEdit>`, you can use :ref:`Control.set_drag_forwarding()<class_Control_method_set_drag_forwarding>` on the node returned by :ref:`get_line_edit()<class_SpinBox_method_get_line_edit>`.
 
 .. rst-class:: classref-reftable-group
 
@@ -63,25 +65,33 @@ Properties
 .. table::
    :widths: auto
 
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`HorizontalAlignment<enum_@GlobalScope_HorizontalAlignment>` | :ref:`alignment<class_SpinBox_property_alignment>`                           | ``0``                                                                        |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`float<class_float>`                                         | :ref:`custom_arrow_step<class_SpinBox_property_custom_arrow_step>`           | ``0.0``                                                                      |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`                                           | :ref:`editable<class_SpinBox_property_editable>`                             | ``true``                                                                     |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`String<class_String>`                                       | :ref:`prefix<class_SpinBox_property_prefix>`                                 | ``""``                                                                       |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`                                           | :ref:`select_all_on_focus<class_SpinBox_property_select_all_on_focus>`       | ``false``                                                                    |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | |bitfield|\[:ref:`SizeFlags<enum_Control_SizeFlags>`\]            | size_flags_vertical                                                          | ``1`` (overrides :ref:`Control<class_Control_property_size_flags_vertical>`) |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`float<class_float>`                                         | step                                                                         | ``1.0`` (overrides :ref:`Range<class_Range_property_step>`)                  |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`String<class_String>`                                       | :ref:`suffix<class_SpinBox_property_suffix>`                                 | ``""``                                                                       |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
-   | :ref:`bool<class_bool>`                                           | :ref:`update_on_text_changed<class_SpinBox_property_update_on_text_changed>` | ``false``                                                                    |
-   +-------------------------------------------------------------------+------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`HorizontalAlignment<enum_@GlobalScope_HorizontalAlignment>` | :ref:`alignment<class_SpinBox_property_alignment>`                                   | ``0``                                                                        |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                           | :ref:`custom_arrow_round<class_SpinBox_property_custom_arrow_round>`                 | ``false``                                                                    |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`float<class_float>`                                         | :ref:`custom_arrow_step<class_SpinBox_property_custom_arrow_step>`                   | ``0.0``                                                                      |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                           | :ref:`editable<class_SpinBox_property_editable>`                                     | ``true``                                                                     |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                                       | :ref:`format<class_SpinBox_property_format>`                                         | ``""``                                                                       |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`AutoTranslateMode<enum_Node_AutoTranslateMode>`             | :ref:`format_auto_translate_mode<class_SpinBox_property_format_auto_translate_mode>` | ``2``                                                                        |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                                       | :ref:`plural_format<class_SpinBox_property_plural_format>`                           |                                                                              |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                                       | :ref:`prefix<class_SpinBox_property_prefix>`                                         | ``""``                                                                       |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                           | :ref:`select_all_on_focus<class_SpinBox_property_select_all_on_focus>`               | ``false``                                                                    |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | |bitfield|\[:ref:`SizeFlags<enum_Control_SizeFlags>`\]            | size_flags_vertical                                                                  | ``1`` (overrides :ref:`Control<class_Control_property_size_flags_vertical>`) |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`float<class_float>`                                         | step                                                                                 | ``1.0`` (overrides :ref:`Range<class_Range_property_step>`)                  |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`String<class_String>`                                       | :ref:`suffix<class_SpinBox_property_suffix>`                                         | ``""``                                                                       |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                           | :ref:`update_on_text_changed<class_SpinBox_property_update_on_text_changed>`         | ``false``                                                                    |
+   +-------------------------------------------------------------------+--------------------------------------------------------------------------------------+------------------------------------------------------------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -127,6 +137,8 @@ Theme Properties
    | :ref:`int<class_int>`             | :ref:`buttons_width<class_SpinBox_theme_constant_buttons_width>`                                       | ``16``                              |
    +-----------------------------------+--------------------------------------------------------------------------------------------------------+-------------------------------------+
    | :ref:`int<class_int>`             | :ref:`field_and_buttons_separation<class_SpinBox_theme_constant_field_and_buttons_separation>`         | ``2``                               |
+   +-----------------------------------+--------------------------------------------------------------------------------------------------------+-------------------------------------+
+   | :ref:`int<class_int>`             | :ref:`icon_max_width<class_SpinBox_theme_constant_icon_max_width>`                                     | ``0``                               |
    +-----------------------------------+--------------------------------------------------------------------------------------------------------+-------------------------------------+
    | :ref:`int<class_int>`             | :ref:`set_min_buttons_width_from_icons<class_SpinBox_theme_constant_set_min_buttons_width_from_icons>` | ``1``                               |
    +-----------------------------------+--------------------------------------------------------------------------------------------------------+-------------------------------------+
@@ -195,6 +207,23 @@ Changes the alignment of the underlying :ref:`LineEdit<class_LineEdit>`.
 
 ----
 
+.. _class_SpinBox_property_custom_arrow_round:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **custom_arrow_round** = ``false`` :ref:`🔗<class_SpinBox_property_custom_arrow_round>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_custom_arrow_round**\ (\ value\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **is_custom_arrow_rounding**\ (\ )
+
+If ``true``, the value will be rounded to a multiple of :ref:`custom_arrow_step<class_SpinBox_property_custom_arrow_step>` when interacting with the arrow buttons. Otherwise, increments the value by :ref:`custom_arrow_step<class_SpinBox_property_custom_arrow_step>` and then rounds it according to :ref:`Range.step<class_Range_property_step>`.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_SpinBox_property_custom_arrow_step:
 
 .. rst-class:: classref-property
@@ -206,7 +235,9 @@ Changes the alignment of the underlying :ref:`LineEdit<class_LineEdit>`.
 - |void| **set_custom_arrow_step**\ (\ value\: :ref:`float<class_float>`\ )
 - :ref:`float<class_float>` **get_custom_arrow_step**\ (\ )
 
-If not ``0``, :ref:`Range.value<class_Range_property_value>` will always be rounded to a multiple of :ref:`custom_arrow_step<class_SpinBox_property_custom_arrow_step>` when interacting with the arrow buttons of the **SpinBox**.
+If not ``0``, sets the step when interacting with the arrow buttons of the **SpinBox**.
+
+\ **Note:** :ref:`Range.value<class_Range_property_value>` will still be rounded to a multiple of :ref:`Range.step<class_Range_property_step>`.
 
 .. rst-class:: classref-item-separator
 
@@ -229,6 +260,65 @@ If ``true``, the **SpinBox** will be editable. Otherwise, it will be read only.
 
 ----
 
+.. _class_SpinBox_property_format:
+
+.. rst-class:: classref-property
+
+:ref:`String<class_String>` **format** = ``""`` :ref:`🔗<class_SpinBox_property_format>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_format**\ (\ value\: :ref:`String<class_String>`\ )
+- :ref:`String<class_String>` **get_format**\ (\ )
+
+The formatting of the displayed numeric value, using the same rules as :ref:`String<class_String>`'s ``%`` operator (see :doc:`GDScript format strings <../tutorials/scripting/gdscript/gdscript_format_string>`). If empty, the value is displayed with no special formatting. If the format string is invalid, the **SpinBox** will display ``"ERROR"``, with the error message available as a configuration warning.
+
+The following format strings can be used as examples:
+
+- ``"(%s)"`` displays as a number in parentheses (e.g. ``(6.9)``).
+
+- ``"%d ms"`` displays as an integer with milliseconds unit (e.g. ``420 ms``).
+
+- ``"%0.2f%%"`` displays as a percentage, with 2 decimal places of precision (e.g. ``21.37%``).
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_SpinBox_property_format_auto_translate_mode:
+
+.. rst-class:: classref-property
+
+:ref:`AutoTranslateMode<enum_Node_AutoTranslateMode>` **format_auto_translate_mode** = ``2`` :ref:`🔗<class_SpinBox_property_format_auto_translate_mode>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_format_auto_translate_mode**\ (\ value\: :ref:`AutoTranslateMode<enum_Node_AutoTranslateMode>`\ )
+- :ref:`AutoTranslateMode<enum_Node_AutoTranslateMode>` **get_format_auto_translate_mode**\ (\ )
+
+Auto-translation mode for the :ref:`format<class_SpinBox_property_format>`. Useful when the format has a word that can be translated.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_SpinBox_property_plural_format:
+
+.. rst-class:: classref-property
+
+:ref:`String<class_String>` **plural_format** :ref:`🔗<class_SpinBox_property_plural_format>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_plural_format**\ (\ value\: :ref:`String<class_String>`\ )
+- :ref:`String<class_String>` **get_plural_format**\ (\ )
+
+Plural version of :ref:`format<class_SpinBox_property_format>`. Used only if :ref:`format<class_SpinBox_property_format>` is not empty and :ref:`format_auto_translate_mode<class_SpinBox_property_format_auto_translate_mode>` is not disabled. See also :ref:`Object.tr_n()<class_Object_method_tr_n>`.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_SpinBox_property_prefix:
 
 .. rst-class:: classref-property
@@ -240,7 +330,9 @@ If ``true``, the **SpinBox** will be editable. Otherwise, it will be read only.
 - |void| **set_prefix**\ (\ value\: :ref:`String<class_String>`\ )
 - :ref:`String<class_String>` **get_prefix**\ (\ )
 
-Adds the specified prefix string before the numerical value of the **SpinBox**.
+**Deprecated:** Use :ref:`format<class_SpinBox_property_format>` instead.
+
+Adds the specified prefix string before the numerical value of the **SpinBox**. This is used only if :ref:`format<class_SpinBox_property_format>` is empty.
 
 .. rst-class:: classref-item-separator
 
@@ -274,7 +366,9 @@ If ``true``, the **SpinBox** will select the whole text when the :ref:`LineEdit<
 - |void| **set_suffix**\ (\ value\: :ref:`String<class_String>`\ )
 - :ref:`String<class_String>` **get_suffix**\ (\ )
 
-Adds the specified suffix string after the numerical value of the **SpinBox**.
+**Deprecated:** Use :ref:`format<class_SpinBox_property_format>` instead.
+
+Adds the specified suffix string after the numerical value of the **SpinBox**. This is used only if :ref:`format<class_SpinBox_property_format>` is empty.
 
 .. rst-class:: classref-item-separator
 
@@ -293,6 +387,8 @@ Adds the specified suffix string after the numerical value of the **SpinBox**.
 
 Sets the value of the :ref:`Range<class_Range>` for this **SpinBox** when the :ref:`LineEdit<class_LineEdit>` text is *changed* instead of *submitted*. See :ref:`LineEdit.text_changed<class_LineEdit_signal_text_changed>` and :ref:`LineEdit.text_submitted<class_LineEdit_signal_text_submitted>`.
 
+\ **Note:** If set to ``true``, this will interfere with entering mathematical expressions in the **SpinBox**. The **SpinBox** will try to evaluate the expression as you type, which means symbols like a trailing ``+`` are removed immediately by the expression being evaluated.
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -308,7 +404,7 @@ Method Descriptions
 
 |void| **apply**\ (\ ) :ref:`🔗<class_SpinBox_method_apply>`
 
-Applies the current value of this **SpinBox**.
+Applies the current value of this **SpinBox**. This is equivalent to pressing :kbd:`Enter` while editing the :ref:`LineEdit<class_LineEdit>` used by the **SpinBox**. This will cause :ref:`LineEdit.text_submitted<class_LineEdit_signal_text_submitted>` to be emitted and its currently contained expression to be evaluated.
 
 .. rst-class:: classref-item-separator
 
@@ -465,6 +561,18 @@ Width of the horizontal separation between the text input field (:ref:`LineEdit<
 
 ----
 
+.. _class_SpinBox_theme_constant_icon_max_width:
+
+.. rst-class:: classref-themeproperty
+
+:ref:`int<class_int>` **icon_max_width** = ``0`` :ref:`🔗<class_SpinBox_theme_constant_icon_max_width>`
+
+The maximum allowed width of the **SpinBox**'s up and down icons. The height is adjusted according to the icon's ratio.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_SpinBox_theme_constant_set_min_buttons_width_from_icons:
 
 .. rst-class:: classref-themeproperty
@@ -579,7 +687,7 @@ Up button icon when the button is being pressed.
 
 :ref:`Texture2D<class_Texture2D>` **updown** :ref:`🔗<class_SpinBox_theme_icon_updown>`
 
-Single texture representing both the up and down buttons icons. It is displayed in the middle of the buttons and does not change upon interaction. It is recommended to use individual :ref:`up<class_SpinBox_theme_icon_up>` and :ref:`down<class_SpinBox_theme_icon_down>` graphics for better usability. This can also be used as additional decoration between the two buttons.
+Single texture representing both the up and down buttons icons. It is displayed in the middle of the buttons and does not change upon interaction. If a valid icon is assigned, it will replace :ref:`up<class_SpinBox_theme_icon_up>` and :ref:`down<class_SpinBox_theme_icon_down>`.
 
 .. rst-class:: classref-item-separator
 
@@ -702,6 +810,7 @@ Background style of the up button when being pressed.
 :ref:`StyleBox<class_StyleBox>` drawn in the space occupied by the separation between the up and down buttons.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

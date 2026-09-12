@@ -61,6 +61,8 @@ Methods
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                                            | :ref:`add_bone<class_Skeleton3D_method_add_bone>`\ (\ name\: :ref:`String<class_String>`\ )                                                                                                                                                                         |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                           | :ref:`advance<class_Skeleton3D_method_advance>`\ (\ delta\: :ref:`float<class_float>`\ )                                                                                                                                                                            |
+   +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`clear_bones<class_Skeleton3D_method_clear_bones>`\ (\ )                                                                                                                                                                                                       |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`clear_bones_global_pose_override<class_Skeleton3D_method_clear_bones_global_pose_override>`\ (\ )                                                                                                                                                             |
@@ -103,6 +105,8 @@ Methods
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Transform3D<class_Transform3D>`                            | :ref:`get_bone_rest<class_Skeleton3D_method_get_bone_rest>`\ (\ bone_idx\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                         |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Vector3<class_Vector3>`                                    | :ref:`get_bone_skin_scale<class_Skeleton3D_method_get_bone_skin_scale>`\ (\ bone_idx\: :ref:`int<class_int>`\ ) |const|                                                                                                                                             |
+   +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`StringName<class_StringName>`                              | :ref:`get_concatenated_bone_names<class_Skeleton3D_method_get_concatenated_bone_names>`\ (\ ) |const|                                                                                                                                                               |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`PackedInt32Array<class_PackedInt32Array>`                  | :ref:`get_parentless_bones<class_Skeleton3D_method_get_parentless_bones>`\ (\ ) |const|                                                                                                                                                                             |
@@ -125,9 +129,9 @@ Methods
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`SkinReference<class_SkinReference>`                        | :ref:`register_skin<class_Skeleton3D_method_register_skin>`\ (\ skin\: :ref:`Skin<class_Skin>`\ )                                                                                                                                                                   |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                           | :ref:`reset_bone_pose<class_Skeleton3D_method_reset_bone_pose>`\ (\ bone_idx\: :ref:`int<class_int>`\ )                                                                                                                                                             |
+   | |void|                                                           | :ref:`reset_bone_pose<class_Skeleton3D_method_reset_bone_pose>`\ (\ bone_idx\: :ref:`int<class_int>`, reset_bone_skin_scale\: :ref:`bool<class_bool>` = false\ )                                                                                                    |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                                           | :ref:`reset_bone_poses<class_Skeleton3D_method_reset_bone_poses>`\ (\ )                                                                                                                                                                                             |
+   | |void|                                                           | :ref:`reset_bone_poses<class_Skeleton3D_method_reset_bone_poses>`\ (\ reset_bone_skin_scale\: :ref:`bool<class_bool>` = false\ )                                                                                                                                    |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`set_bone_enabled<class_Skeleton3D_method_set_bone_enabled>`\ (\ bone_idx\: :ref:`int<class_int>`, enabled\: :ref:`bool<class_bool>` = true\ )                                                                                                                 |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -151,6 +155,8 @@ Methods
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`set_bone_rest<class_Skeleton3D_method_set_bone_rest>`\ (\ bone_idx\: :ref:`int<class_int>`, rest\: :ref:`Transform3D<class_Transform3D>`\ )                                                                                                                   |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                           | :ref:`set_bone_skin_scale<class_Skeleton3D_method_set_bone_skin_scale>`\ (\ bone_idx\: :ref:`int<class_int>`, skin_scale\: :ref:`Vector3<class_Vector3>`\ )                                                                                                         |
+   +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                           | :ref:`unparent_bone_and_rest<class_Skeleton3D_method_unparent_bone_and_rest>`\ (\ bone_idx\: :ref:`int<class_int>`\ )                                                                                                                                               |
    +------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -169,7 +175,7 @@ Signals
 
 **bone_enabled_changed**\ (\ bone_idx\: :ref:`int<class_int>`\ ) :ref:`🔗<class_Skeleton3D_signal_bone_enabled_changed>`
 
-Emitted when the bone at ``bone_idx`` is toggled with :ref:`set_bone_enabled<class_Skeleton3D_method_set_bone_enabled>`. Use :ref:`is_bone_enabled<class_Skeleton3D_method_is_bone_enabled>` to check the new value.
+Emitted when the bone at ``bone_idx`` is toggled with :ref:`set_bone_enabled()<class_Skeleton3D_method_set_bone_enabled>`. Use :ref:`is_bone_enabled()<class_Skeleton3D_method_is_bone_enabled>` to check the new value.
 
 .. rst-class:: classref-item-separator
 
@@ -181,9 +187,7 @@ Emitted when the bone at ``bone_idx`` is toggled with :ref:`set_bone_enabled<cla
 
 **bone_list_changed**\ (\ ) :ref:`🔗<class_Skeleton3D_signal_bone_list_changed>`
 
-.. container:: contribute
-
-	There is currently no description for this signal. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Emitted when the list of bones changes, such as when calling :ref:`add_bone()<class_Skeleton3D_method_add_bone>`, :ref:`set_bone_parent()<class_Skeleton3D_method_set_bone_parent>`, :ref:`unparent_bone_and_rest()<class_Skeleton3D_method_unparent_bone_and_rest>`, or :ref:`clear_bones()<class_Skeleton3D_method_clear_bones>`.
 
 .. rst-class:: classref-item-separator
 
@@ -198,6 +202,18 @@ Emitted when the bone at ``bone_idx`` is toggled with :ref:`set_bone_enabled<cla
 Emitted when the pose is updated.
 
 \ **Note:** During the update process, this signal is not fired, so modification by :ref:`SkeletonModifier3D<class_SkeletonModifier3D>` is not detected.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Skeleton3D_signal_rest_updated:
+
+.. rst-class:: classref-signal
+
+**rest_updated**\ (\ ) :ref:`🔗<class_Skeleton3D_signal_rest_updated>`
+
+Emitted when the rest is updated.
 
 .. rst-class:: classref-item-separator
 
@@ -256,6 +272,14 @@ Set a flag to process modification during physics frames (see :ref:`Node.NOTIFIC
 
 Set a flag to process modification during process frames (see :ref:`Node.NOTIFICATION_INTERNAL_PROCESS<class_Node_constant_NOTIFICATION_INTERNAL_PROCESS>`).
 
+.. _class_Skeleton3D_constant_MODIFIER_CALLBACK_MODE_PROCESS_MANUAL:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`ModifierCallbackModeProcess<enum_Skeleton3D_ModifierCallbackModeProcess>` **MODIFIER_CALLBACK_MODE_PROCESS_MANUAL** = ``2``
+
+Do not process modification. Use :ref:`advance()<class_Skeleton3D_method_advance>` to process the modification manually.
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -295,7 +319,7 @@ Property Descriptions
 
 **Deprecated:** This property may be changed or removed in future versions.
 
-If you follow the recommended workflow and explicitly have :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>` as a child of **Skeleton3D**, you can control whether it is affected by raycasting without running :ref:`physical_bones_start_simulation<class_Skeleton3D_method_physical_bones_start_simulation>`, by its :ref:`SkeletonModifier3D.active<class_SkeletonModifier3D_property_active>`.
+If you follow the recommended workflow and explicitly have :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>` as a child of **Skeleton3D**, you can control whether it is affected by raycasting without running :ref:`physical_bones_start_simulation()<class_Skeleton3D_method_physical_bones_start_simulation>`, by its :ref:`SkeletonModifier3D.active<class_SkeletonModifier3D_property_active>`.
 
 However, for old (deprecated) configurations, **Skeleton3D** has an internal virtual :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>` for compatibility. This property controls the internal virtual :ref:`PhysicalBoneSimulator3D<class_PhysicalBoneSimulator3D>`'s :ref:`SkeletonModifier3D.active<class_SkeletonModifier3D_property_active>`.
 
@@ -375,6 +399,20 @@ Adds a new bone with the given name. Returns the new bone's index, or ``-1`` if 
 
 ----
 
+.. _class_Skeleton3D_method_advance:
+
+.. rst-class:: classref-method
+
+|void| **advance**\ (\ delta\: :ref:`float<class_float>`\ ) :ref:`🔗<class_Skeleton3D_method_advance>`
+
+Manually advance the child :ref:`SkeletonModifier3D<class_SkeletonModifier3D>`\ s by the specified time (in seconds).
+
+\ **Note:** The ``delta`` is temporarily accumulated in the **Skeleton3D**, and the deferred process uses the accumulated value to process the modification.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_Skeleton3D_method_clear_bones:
 
 .. rst-class:: classref-method
@@ -409,7 +447,7 @@ Removes the global pose override on all bones in the skeleton.
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -537,7 +575,7 @@ Returns the global rest transform for ``bone_idx``.
 
 :ref:`Variant<class_Variant>` **get_bone_meta**\ (\ bone_idx\: :ref:`int<class_int>`, key\: :ref:`StringName<class_StringName>`\ ) |const| :ref:`🔗<class_Skeleton3D_method_get_bone_meta>`
 
-Returns bone metadata for ``bone_idx`` with ``key``.
+Returns the metadata with the given ``key`` for the bone at index ``bone_idx``.
 
 .. rst-class:: classref-item-separator
 
@@ -549,7 +587,7 @@ Returns bone metadata for ``bone_idx`` with ``key``.
 
 :ref:`Array<class_Array>`\[:ref:`StringName<class_StringName>`\] **get_bone_meta_list**\ (\ bone_idx\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_Skeleton3D_method_get_bone_meta_list>`
 
-Returns a list of all metadata keys for ``bone_idx``.
+Returns the list of all metadata keys for the bone at index ``bone_idx``.
 
 .. rst-class:: classref-item-separator
 
@@ -643,13 +681,25 @@ Returns the rest transform for a bone ``bone_idx``.
 
 ----
 
+.. _class_Skeleton3D_method_get_bone_skin_scale:
+
+.. rst-class:: classref-method
+
+:ref:`Vector3<class_Vector3>` **get_bone_skin_scale**\ (\ bone_idx\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_Skeleton3D_method_get_bone_skin_scale>`
+
+Returns the skin scale of the bone at ``bone_idx``.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_Skeleton3D_method_get_concatenated_bone_names:
 
 .. rst-class:: classref-method
 
 :ref:`StringName<class_StringName>` **get_concatenated_bone_names**\ (\ ) |const| :ref:`🔗<class_Skeleton3D_method_get_concatenated_bone_names>`
 
-Returns all bone names concatenated with commas (``,``) as a single :ref:`StringName<class_StringName>`.
+Returns all bone names concatenated with commas (\ ``,``) as a single :ref:`StringName<class_StringName>`.
 
 It is useful to set it as a hint for the enum property.
 
@@ -691,7 +741,7 @@ Use for invalidating caches in IK solvers and other nodes which process bones.
 
 :ref:`bool<class_bool>` **has_bone_meta**\ (\ bone_idx\: :ref:`int<class_int>`, key\: :ref:`StringName<class_StringName>`\ ) |const| :ref:`🔗<class_Skeleton3D_method_has_bone_meta>`
 
-Returns whether there exists any bone metadata for ``bone_idx`` with key ``key``.
+Returns ``true`` if the bone at index ``bone_idx`` has metadata with the given ``key``.
 
 .. rst-class:: classref-item-separator
 
@@ -799,7 +849,7 @@ Binds the given Skin to the Skeleton.
 
 .. rst-class:: classref-method
 
-|void| **reset_bone_pose**\ (\ bone_idx\: :ref:`int<class_int>`\ ) :ref:`🔗<class_Skeleton3D_method_reset_bone_pose>`
+|void| **reset_bone_pose**\ (\ bone_idx\: :ref:`int<class_int>`, reset_bone_skin_scale\: :ref:`bool<class_bool>` = false\ ) :ref:`🔗<class_Skeleton3D_method_reset_bone_pose>`
 
 Sets the bone pose to rest for ``bone_idx``.
 
@@ -811,7 +861,7 @@ Sets the bone pose to rest for ``bone_idx``.
 
 .. rst-class:: classref-method
 
-|void| **reset_bone_poses**\ (\ ) :ref:`🔗<class_Skeleton3D_method_reset_bone_poses>`
+|void| **reset_bone_poses**\ (\ reset_bone_skin_scale\: :ref:`bool<class_bool>` = false\ ) :ref:`🔗<class_Skeleton3D_method_reset_bone_poses>`
 
 Sets all bone poses to rests.
 
@@ -839,7 +889,7 @@ Disables the pose for the bone at ``bone_idx`` if ``false``, enables the bone po
 
 Sets the global pose transform, ``pose``, for the bone at ``bone_idx``.
 
-\ **Note:** If other bone poses have been changed, this method executes a dirty poses recalculation and will cause performance to deteriorate. If you know that multiple global poses will be applied, consider using :ref:`set_bone_pose<class_Skeleton3D_method_set_bone_pose>` with precalculation.
+\ **Note:** If other bone poses have been changed, this method executes a dirty poses recalculation and will cause performance to deteriorate. If you know that multiple global poses will be applied, consider using :ref:`set_bone_pose()<class_Skeleton3D_method_set_bone_pose>` with precalculation.
 
 .. rst-class:: classref-item-separator
 
@@ -857,7 +907,7 @@ Sets the global pose transform, ``pose``, for the bone at ``bone_idx``.
 
 \ ``amount`` is the interpolation strength that will be used when applying the pose, and ``persistent`` determines if the applied pose will remain.
 
-\ **Note:** The pose transform needs to be a global pose! To convert a world transform from a :ref:`Node3D<class_Node3D>` to a global bone pose, multiply the :ref:`Transform3D.affine_inverse<class_Transform3D_method_affine_inverse>` of the node's :ref:`Node3D.global_transform<class_Node3D_property_global_transform>` by the desired world transform.
+\ **Note:** The pose transform needs to be a global pose! To convert a world transform from a :ref:`Node3D<class_Node3D>` to a global bone pose, multiply the :ref:`Transform3D.affine_inverse()<class_Transform3D_method_affine_inverse>` of the node's :ref:`Node3D.global_transform<class_Node3D_property_global_transform>` by the desired world transform.
 
 .. rst-class:: classref-item-separator
 
@@ -869,7 +919,7 @@ Sets the global pose transform, ``pose``, for the bone at ``bone_idx``.
 
 |void| **set_bone_meta**\ (\ bone_idx\: :ref:`int<class_int>`, key\: :ref:`StringName<class_StringName>`, value\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_Skeleton3D_method_set_bone_meta>`
 
-Sets bone metadata for ``bone_idx``, will set the ``key`` meta to ``value``.
+Sets the metadata with the given ``key`` to ``value`` for the bone at index ``bone_idx``.
 
 .. rst-class:: classref-item-separator
 
@@ -961,6 +1011,22 @@ Sets the rest transform for bone ``bone_idx``.
 
 ----
 
+.. _class_Skeleton3D_method_set_bone_skin_scale:
+
+.. rst-class:: classref-method
+
+|void| **set_bone_skin_scale**\ (\ bone_idx\: :ref:`int<class_int>`, skin_scale\: :ref:`Vector3<class_Vector3>`\ ) :ref:`🔗<class_Skeleton3D_method_set_bone_skin_scale>`
+
+Sets the skin scale of the bone at ``bone_idx`` to ``skin_scale``. This scale does not affect bone children. This is useful for modifying the visual thickness of a skin.
+
+Even if the skin is visually deformed, neither scaling nor repositioning of the bones occurs. This means that you may need to adjust the origin of the child bone to synchronize its joint position with the scaling by using :ref:`BoneSpaceAdjuster3D<class_BoneSpaceAdjuster3D>`.
+
+\ **Note:** The skin scaling may corrupt the appearance of the gizmo for some SkeletonModifier classes, such as SpringBoneSimulator and IKModifier3D, which rely on bone lengths for skinning.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_Skeleton3D_method_unparent_bone_and_rest:
 
 .. rst-class:: classref-method
@@ -970,6 +1036,7 @@ Sets the rest transform for bone ``bone_idx``.
 Unparents the bone at ``bone_idx`` and sets its rest position to that of its parent prior to being reset.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
