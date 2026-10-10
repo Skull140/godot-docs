@@ -211,7 +211,11 @@ The offset applied to each vertex.
 
 The polygon's list of vertices. The final point will be connected to the first.
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector2Array<class_PackedVector2Array>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector2Array<class_PackedVector2Array>` for more details.
 
 .. rst-class:: classref-item-separator
 
@@ -332,7 +336,11 @@ Amount to multiply the :ref:`uv<class_Polygon2D_property_uv>` coordinates when u
 
 Texture coordinates for each vertex of the polygon. There should be one UV value per polygon vertex. If there are fewer, undefined vertices will use ``Vector2(0, 0)``.
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector2Array<class_PackedVector2Array>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedVector2Array<class_PackedVector2Array>` for more details.
 
 .. rst-class:: classref-item-separator
 
@@ -351,7 +359,11 @@ Texture coordinates for each vertex of the polygon. There should be one UV value
 
 Color for each vertex. Colors are interpolated between vertices, resulting in smooth gradients. There should be one per polygon vertex. If there are fewer, undefined vertices will use :ref:`color<class_Polygon2D_property_color>`.
 
-**Note:** The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedColorArray<class_PackedColorArray>` for more details.
+
+
+.. classref_note::
+
+    The returned array is *copied* and any changes to it will not update the original property value. See :ref:`PackedColorArray<class_PackedColorArray>` for more details.
 
 .. rst-class:: classref-section-separator
 
@@ -455,6 +467,7 @@ Sets the path to the node associated with the specified bone.
 Sets the weight values for the specified bone.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
