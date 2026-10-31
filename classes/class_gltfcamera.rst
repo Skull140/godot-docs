@@ -40,17 +40,17 @@ Properties
 .. table::
    :widths: auto
 
-   +---------------------------+-----------------------------------------------------------+------------+
-   | :ref:`float<class_float>` | :ref:`depth_far<class_GLTFCamera_property_depth_far>`     | ``4000.0`` |
-   +---------------------------+-----------------------------------------------------------+------------+
-   | :ref:`float<class_float>` | :ref:`depth_near<class_GLTFCamera_property_depth_near>`   | ``0.05``   |
-   +---------------------------+-----------------------------------------------------------+------------+
-   | :ref:`float<class_float>` | :ref:`fov<class_GLTFCamera_property_fov>`                 | ``1.309``  |
-   +---------------------------+-----------------------------------------------------------+------------+
-   | :ref:`bool<class_bool>`   | :ref:`perspective<class_GLTFCamera_property_perspective>` | ``true``   |
-   +---------------------------+-----------------------------------------------------------+------------+
-   | :ref:`float<class_float>` | :ref:`size_mag<class_GLTFCamera_property_size_mag>`       | ``0.5``    |
-   +---------------------------+-----------------------------------------------------------+------------+
+   +---------------------------+-----------------------------------------------------------+---------------+
+   | :ref:`float<class_float>` | :ref:`depth_far<class_GLTFCamera_property_depth_far>`     | ``4000.0``    |
+   +---------------------------+-----------------------------------------------------------+---------------+
+   | :ref:`float<class_float>` | :ref:`depth_near<class_GLTFCamera_property_depth_near>`   | ``0.05``      |
+   +---------------------------+-----------------------------------------------------------+---------------+
+   | :ref:`float<class_float>` | :ref:`fov<class_GLTFCamera_property_fov>`                 | ``1.3089969`` |
+   +---------------------------+-----------------------------------------------------------+---------------+
+   | :ref:`bool<class_bool>`   | :ref:`perspective<class_GLTFCamera_property_perspective>` | ``true``      |
+   +---------------------------+-----------------------------------------------------------+---------------+
+   | :ref:`float<class_float>` | :ref:`size_mag<class_GLTFCamera_property_size_mag>`       | ``0.5``       |
+   +---------------------------+-----------------------------------------------------------+---------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -117,14 +117,14 @@ The distance to the near culling boundary for this camera relative to its local 
 
 .. rst-class:: classref-property
 
-:ref:`float<class_float>` **fov** = ``1.309`` :ref:`🔗<class_GLTFCamera_property_fov>`
+:ref:`float<class_float>` **fov** = ``1.3089969`` :ref:`🔗<class_GLTFCamera_property_fov>`
 
 .. rst-class:: classref-property-setget
 
 - |void| **set_fov**\ (\ value\: :ref:`float<class_float>`\ )
 - :ref:`float<class_float>` **get_fov**\ (\ )
 
-The FOV of the camera. This class and glTF define the camera FOV in radians, while Godot uses degrees. This maps to glTF's ``yfov`` property. This value is only used for perspective cameras, when :ref:`perspective<class_GLTFCamera_property_perspective>` is true.
+The FOV of the camera. This class and glTF define the camera FOV in radians, while Godot uses degrees. This maps to glTF's ``yfov`` property. This value is only used for perspective cameras, when :ref:`perspective<class_GLTFCamera_property_perspective>` is ``true``.
 
 .. rst-class:: classref-item-separator
 
@@ -141,7 +141,7 @@ The FOV of the camera. This class and glTF define the camera FOV in radians, whi
 - |void| **set_perspective**\ (\ value\: :ref:`bool<class_bool>`\ )
 - :ref:`bool<class_bool>` **get_perspective**\ (\ )
 
-Whether or not the camera is in perspective mode. If false, the camera is in orthographic/orthogonal mode. This maps to glTF's camera ``type`` property. See :ref:`Camera3D.projection<class_Camera3D_property_projection>` and the glTF spec for more information.
+If ``true``, the camera is in perspective mode. Otherwise, the camera is in orthographic/orthogonal mode. This maps to glTF's camera ``type`` property. See :ref:`Camera3D.projection<class_Camera3D_property_projection>` and the glTF spec for more information.
 
 .. rst-class:: classref-item-separator
 
@@ -158,7 +158,7 @@ Whether or not the camera is in perspective mode. If false, the camera is in ort
 - |void| **set_size_mag**\ (\ value\: :ref:`float<class_float>`\ )
 - :ref:`float<class_float>` **get_size_mag**\ (\ )
 
-The size of the camera. This class and glTF define the camera size magnitude as a radius in meters, while Godot defines it as a diameter in meters. This maps to glTF's ``ymag`` property. This value is only used for orthographic/orthogonal cameras, when :ref:`perspective<class_GLTFCamera_property_perspective>` is false.
+The size of the camera. This class and glTF define the camera size magnitude as a radius in meters, while Godot defines it as a diameter in meters. This maps to glTF's ``ymag`` property. This value is only used for orthographic/orthogonal cameras, when :ref:`perspective<class_GLTFCamera_property_perspective>` is ``false``.
 
 .. rst-class:: classref-section-separator
 
@@ -214,6 +214,7 @@ Serializes this GLTFCamera instance into a :ref:`Dictionary<class_Dictionary>`.
 Converts this GLTFCamera instance into a Godot :ref:`Camera3D<class_Camera3D>` node.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
