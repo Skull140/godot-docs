@@ -55,9 +55,13 @@ Properties
    +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------+-----------+
    | :ref:`bool<class_bool>`             | :ref:`generate_mipmaps<class_ResourceImporterDynamicFont_property_generate_mipmaps>`                                     | ``false`` |
    +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------+-----------+
-   | :ref:`int<class_int>`               | :ref:`hinting<class_ResourceImporterDynamicFont_property_hinting>`                                                       | ``1``     |
+   | :ref:`int<class_int>`               | :ref:`hinting<class_ResourceImporterDynamicFont_property_hinting>`                                                       | ``3``     |
+   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>`             | :ref:`keep_rounding_remainders<class_ResourceImporterDynamicFont_property_keep_rounding_remainders>`                     | ``true``  |
    +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------+-----------+
    | :ref:`Dictionary<class_Dictionary>` | :ref:`language_support<class_ResourceImporterDynamicFont_property_language_support>`                                     | ``{}``    |
+   +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>`             | :ref:`modulate_color_glyphs<class_ResourceImporterDynamicFont_property_modulate_color_glyphs>`                           | ``false`` |
    +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------+-----------+
    | :ref:`int<class_int>`               | :ref:`msdf_pixel_range<class_ResourceImporterDynamicFont_property_msdf_pixel_range>`                                     | ``8``     |
    +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------+-----------+
@@ -183,7 +187,7 @@ Enabling :ref:`generate_mipmaps<class_ResourceImporterDynamicFont_property_gener
 
 .. rst-class:: classref-property
 
-:ref:`int<class_int>` **hinting** = ``1`` :ref:`🔗<class_ResourceImporterDynamicFont_property_hinting>`
+:ref:`int<class_int>` **hinting** = ``3`` :ref:`🔗<class_ResourceImporterDynamicFont_property_hinting>`
 
 The hinting mode to use. This controls how aggressively glyph edges should be snapped to pixels when rasterizing the font. Depending on personal preference, you may prefer using one hinting mode over the other. Hinting modes other than **None** are only effective if the font contains hinting data (see :ref:`force_autohinter<class_ResourceImporterDynamicFont_property_force_autohinter>`).
 
@@ -191,7 +195,23 @@ The hinting mode to use. This controls how aggressively glyph edges should be sn
 
 \ **Light:** Sharp result by snapping glyph edges to pixels on the Y axis only.
 
-\ **Full:** Sharpest by snapping glyph edges to pixels on both X and Y axes.
+\ **Normal:** Sharpest by snapping glyph edges to pixels on both X and Y axes.
+
+\ **Light (Except Pixel Fonts):** **Disabled** for pixel style fonts (each glyph's contours contain only straight horizontal and vertical lines), **Light** for other fonts.
+
+\ **Normal (Except Pixel Fonts):** **Disabled** for pixel style fonts (each glyph's contours contain only straight horizontal and vertical lines), **Normal** for other fonts.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_ResourceImporterDynamicFont_property_keep_rounding_remainders:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **keep_rounding_remainders** = ``true`` :ref:`🔗<class_ResourceImporterDynamicFont_property_keep_rounding_remainders>`
+
+If set to ``true``, when aligning glyphs to the pixel boundaries rounding remainders are accumulated to ensure more uniform glyph distribution. This setting has no effect if subpixel positioning is enabled.
 
 .. rst-class:: classref-item-separator
 
@@ -204,6 +224,18 @@ The hinting mode to use. This controls how aggressively glyph edges should be sn
 :ref:`Dictionary<class_Dictionary>` **language_support** = ``{}`` :ref:`🔗<class_ResourceImporterDynamicFont_property_language_support>`
 
 Override the list of languages supported by this font. If left empty, this is supplied by the font metadata. There is usually no need to change this. See also :ref:`script_support<class_ResourceImporterDynamicFont_property_script_support>`.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_ResourceImporterDynamicFont_property_modulate_color_glyphs:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **modulate_color_glyphs** = ``false`` :ref:`🔗<class_ResourceImporterDynamicFont_property_modulate_color_glyphs>`
+
+If set to ``true``, color modulation is applied when drawing colored glyphs, otherwise it's applied to the monochrome glyphs only.
 
 .. rst-class:: classref-item-separator
 
@@ -265,7 +297,7 @@ The OpenType features to enable, disable or set a value for this font. This can 
 
 :ref:`float<class_float>` **oversampling** = ``0.0`` :ref:`🔗<class_ResourceImporterDynamicFont_property_oversampling>`
 
-If set to a value greater than ``0.0``, overrides the oversampling factor for the font. This can be used to render the font at a higher or lower resolution than intended without affecting its physical size. In most cases, this should be left at ``0.0``.
+If set to a positive value, overrides the oversampling factor of the viewport this font is used in. See :ref:`Viewport.oversampling<class_Viewport_property_oversampling>`. This value doesn't override the ``oversampling`` parameter of ``draw_*`` methods.
 
 .. rst-class:: classref-item-separator
 
@@ -311,9 +343,10 @@ Subpixel positioning improves font rendering appearance, especially at smaller f
 
 \ **One Quarter of a Pixel:** Always perform precise subpixel positioning regardless of font size. Highest quality, slowest rendering.
 
-\ **Auto (Except Pixel Fonts):** **Disabled** for the pixel style fonts (each glyph contours contain only straight horizontal and vertical lines), **Auto** for the other fonts.
+\ **Auto (Except Pixel Fonts):** **Disabled** for pixel style fonts (each glyph's contours contain only straight horizontal and vertical lines), **Auto** for other fonts.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
